@@ -35,6 +35,8 @@ def my_imfilter(image, filter):
     ################
     # Your code here
     ################
+
+    # 这部分是库函数返回的结果
     temp = cv2.filter2D(image, -1, filter)
     image = temp
     return image
