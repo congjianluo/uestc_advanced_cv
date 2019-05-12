@@ -10,6 +10,9 @@ import cv2
 
 ## Setup
 # read images and convert to floating point format
+from utils import luo_imshow, luo_imwrite
+from vis_hybrid_image import vis_hybrid_image
+
 image1 = cv2.imread('../data/dog.bmp')
 image2 = cv2.imread('../data/cat.bmp')
 
@@ -37,7 +40,7 @@ filter = cv2.fspecial('Gaussian', cutoff_frequency * 4 + 1, cutoff_frequency)
 # blur that works best will vary with different image pairs
 ########################################################################
 
-# low_frequencies =
+low_frequencies = image1
 
 ########################################################################
 # Remove the low frequencies from image2. The easiest way to do this is to
@@ -45,12 +48,20 @@ filter = cv2.fspecial('Gaussian', cutoff_frequency * 4 + 1, cutoff_frequency)
 # This will give you an image centered at zero with negative values.
 ########################################################################
 
-# high_frequencies =
+high_frequencies = image2
 
 ########################################################################
 # Combine the high frequencies and low frequencies
 ########################################################################
 
-# hybrid_image =
+hybrid_image = low_frequencies + high_frequencies
 
 ## Visualize and save outputs
+luo_imshow("low", low_frequencies)
+luo_imshow("high", high_frequencies)
+vis = vis_hybrid_image(hybrid_image)
+luo_imshow("vis", vis)
+luo_imwrite(low_frequencies, "low_frequencies.jpg")
+luo_imwrite(high_frequencies, "high_frequencies.jpg")
+luo_imwrite(hybrid_image, "hybrid_image.jpg")
+luo_imwrite(vis, "vis.jpg")

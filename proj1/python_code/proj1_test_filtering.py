@@ -42,7 +42,7 @@ def blur():
 
 ## Large blur
 # This blur would be slow to do directly, so we instead use the fact that
-# %Gaussian blurs are separable and blur sequentially in each direction.
+# #Gaussian blurs are separable and blur sequentially in each direction.
 
 def large_1d_blur():
     large_1d_blur_filter = luo_fspecial(25, 1, 10)
@@ -53,22 +53,35 @@ def large_1d_blur():
     return large_blur_image
 
 
+# #If you want to see how slow this would be to do naively, try out this
+# #equivalent operation:
+# tic #tic and toc run a timer and then print the elapsted time
+# large_blur_filter = fspecial('Gaussian', [25 25], 10);
+# large_blur_image = my_imfilter(test_image, large_blur_filter);
+# toc
+
+## Oriented filter (Sobel Operator)
+
 def sobel():
     sobel_filter = np.array(([-1, 0, 1], [-2, 0, 2], [-1, 0, 1]), dtype="float32")
     sobel_image = my_imfilter(test_image, sobel_filter)
+    # 0.5 added because the output image is centered around zero otherwise and mostly black
     luo_imshow("Figure 5", sobel_image + 0.5)
     luo_imwrite(sobel_image + 0.5, "sobel_image.jpg")
     return sobel_image
 
 
+## High pass filter (Discrete Laplacian)
 def laplacian():
     laplacian_filter = np.array(([0, 1, 0], [1, -4, 1], [0, 1, 0]), dtype="float32")
     laplacian_image = my_imfilter(test_image, laplacian_filter)
+    # 0.5 added because the output image is centered around zero otherwise and mostly black
     luo_imshow("Figure 6", laplacian_image + 0.5)
     luo_imwrite(laplacian_image + 0.5, "laplacian_image.jpg")
     return laplacian_image
 
 
+## High pass "filter" alternative
 def high_pass():
     high_pass_image = test_image - blur()
     luo_imshow("Figure 7", high_pass_image + 0.5)
@@ -76,6 +89,7 @@ def high_pass():
     return high_pass_image
 
 
+# 选择需要运行的test
 if __name__ == "__main__":
     # identity()
     # blur()
@@ -84,3 +98,5 @@ if __name__ == "__main__":
     laplacian()
     # high_pass()
     pass
+
+# by Congjian Luo
