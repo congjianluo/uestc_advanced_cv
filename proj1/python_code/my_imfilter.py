@@ -39,37 +39,37 @@ def my_imfilter(image, filter):
     filter_height = filter.shape[0]
     filter_width = filter.shape[1]
 
-    # image_height = image.shape[0]
-    # image_width = image.shape[1]
-    #
-    # output = np.zeros_like(image)
-    # print("Filtering...")
-    # for channel in range(0, 3):
-    #     channel_data = image[:, :, channel]
-    #     for row in range(1, image_width - 2):
-    #         for column in range(1, image_height - 2):
-    #             output[:, :, channel] = np.mean(
-    #                 np.multiply(filter, [
-    #                     [
-    #                         channel_data[column - 1, row - 1],
-    #                         channel_data[column, row - 1],
-    #                         channel_data[column + 1, row - 1]
-    #                     ],
-    #                     [
-    #                         channel_data[column - 1, row],
-    #                         channel_data[column, row],
-    #                         channel_data[column + 1, row]
-    #                     ],
-    #                     [
-    #                         channel_data[column - 1, row + 1],
-    #                         channel_data[column, row + 1],
-    #                         channel_data[column + 1, row + 1]
-    #                     ]
-    #                 ])
-    #             )
+    image_height = image.shape[0]
+    image_width = image.shape[1]
+
+    output = np.zeros_like(image)
+    print("Filtering...")
+    for channel in range(0, 3):
+        channel_data = image[:, :, channel]
+        for row in range(1, image_width - 2):
+            for column in range(1, image_height - 2):
+                output[:, :, channel] = np.mean(
+                    np.multiply(filter, [
+                        [
+                            channel_data[column - 1, row - 1],
+                            channel_data[column, row - 1],
+                            channel_data[column + 1, row - 1]
+                        ],
+                        [
+                            channel_data[column - 1, row],
+                            channel_data[column, row],
+                            channel_data[column + 1, row]
+                        ],
+                        [
+                            channel_data[column - 1, row + 1],
+                            channel_data[column, row + 1],
+                            channel_data[column + 1, row + 1]
+                        ]
+                    ])
+                )
                 # print("")
     # 这部分是库函数返回的结果
     print("End...")
-    temp = cv2.filter2D(image, -1, filter)
-    image = temp
+    # temp = cv2.filter2D(image, -1, filter)
+    # image = temp
     return image
