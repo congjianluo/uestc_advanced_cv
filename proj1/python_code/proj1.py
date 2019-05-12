@@ -10,7 +10,8 @@ import cv2
 
 ## Setup
 # read images and convert to floating point format
-from utils import luo_imshow, luo_imwrite
+from my_imfilter import my_imfilter
+from utils import luo_imshow, luo_imwrite, luo_fspecial
 from vis_hybrid_image import vis_hybrid_image
 
 image1 = cv2.imread('../data/dog.bmp')
@@ -29,7 +30,7 @@ cutoff_frequency = 7  # This is the standard deviation, in pixels, of the
 # version from the original version). You will want to tune this for every
 # image pair to get the best results.
 
-filter = cv2.fspecial('Gaussian', cutoff_frequency * 4 + 1, cutoff_frequency)
+filter = luo_fspecial(cutoff_frequency * 4 + 1, cutoff_frequency * 4 + 1, cutoff_frequency)
 ###################################################################
 # YOUR CODE BELOW. Use my_imfilter create 'low_frequencies' and
 # 'high_frequencies' and then combine them to create 'hybrid_image'
@@ -40,7 +41,7 @@ filter = cv2.fspecial('Gaussian', cutoff_frequency * 4 + 1, cutoff_frequency)
 # blur that works best will vary with different image pairs
 ########################################################################
 
-low_frequencies = image1
+low_frequencies = my_imfilter(image1, filter)
 
 ########################################################################
 # Remove the low frequencies from image2. The easiest way to do this is to
@@ -48,7 +49,7 @@ low_frequencies = image1
 # This will give you an image centered at zero with negative values.
 ########################################################################
 
-high_frequencies = image2
+high_frequencies = image2 - my_imfilter(image2, filter)
 
 ########################################################################
 # Combine the high frequencies and low frequencies
@@ -57,11 +58,12 @@ high_frequencies = image2
 hybrid_image = low_frequencies + high_frequencies
 
 ## Visualize and save outputs
-luo_imshow("low", low_frequencies)
-luo_imshow("high", high_frequencies)
+# luo_imshow("low", low_frequencies)
+# luo_imshow("high", high_frequencies)
+# luo_imshow("vis_hybrid_image", hybrid_image)
 vis = vis_hybrid_image(hybrid_image)
 luo_imshow("vis", vis)
-luo_imwrite(low_frequencies, "low_frequencies.jpg")
-luo_imwrite(high_frequencies, "high_frequencies.jpg")
-luo_imwrite(hybrid_image, "hybrid_image.jpg")
-luo_imwrite(vis, "vis.jpg")
+# luo_imwrite(low_frequencies, "low_frequencies.jpg")
+# luo_imwrite(high_frequencies, "high_frequencies.jpg")
+# luo_imwrite(hybrid_image, "hybrid_image.jpg")
+# luo_imwrite(vis, "vis.jpg")

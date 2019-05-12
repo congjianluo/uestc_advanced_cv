@@ -16,13 +16,26 @@ def vis_hybrid_image(hybrid_image):
 
     for i in range(2, scales):
         # add padding
-        output = np.concatenate([output, np.ones((original_height, padding, num_colors))], axis=1)
+        output = np.concatenate([
+            output, np.ones([original_height, padding, num_colors], dtype=np.uint8)
+        ], axis=1)
         # dowsample image;
-        cur_image = cv2.resize(cur_image, (0, 0), fx=scale_factor, fy=scale_factor)
+        cur_image = cv2.resize(cur_image, (0, 0), fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_LINEAR)
         # pad the top and append to the output
-        tmp = np.concatenate([np.ones((original_height - cur_image.shape[0],
-                                       cur_image.shape[1], num_colors)), cur_image], axis=0)
-        output = np.concatenate([output, tmp], axis=1)
+        output = np.concatenate(
+            [
+                output,
+                np.concatenate(
+                    [
+                        np.ones(
+                            [original_height - cur_image.shape[0],
+                             cur_image.shape[1], num_colors], dtype=np.uint8
+                        ),
+                        cur_image
+                    ],
+                    axis=0
+                )
+            ], axis=1)
     return output
 
 # code by CongjianLuo
