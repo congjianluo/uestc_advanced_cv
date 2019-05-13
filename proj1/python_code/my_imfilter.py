@@ -43,9 +43,9 @@ def my_imfilter(image, filter):
     image_height = image.shape[1]
 
     width_padding = np.zeros([image_width, filter_height], dtype=np.uint8) * 255
-    height_padding = np.ones([filter_height, image_height + filter_height * 2], dtype=np.uint8) * 255
+    height_padding = np.zeros([filter_width, image_height + filter_height * 2], dtype=np.uint8) * 255
 
-    output = np.zeros_like(image)
+    output = np.ones_like(image)
     print("Filtering...")
     for channel in range(0, 3):
         # 对每个通道进行计算
@@ -63,7 +63,7 @@ def my_imfilter(image, filter):
                 ret = np.multiply(filter, channel_data[column - filter_width:column + filter_width + 1,
                                           row - filter_height:row + filter_height + 1])
                 # 保存对应位
-                output[column - filter_width, row - filter_height, channel] = min(max(np.sum(ret), 0), 255)
+                output[column - filter_width, row - filter_height, channel] = min(max(int(np.sum(ret)), 0), 255)
 
     # 这部分是库函数返回的结果
     print("End...")

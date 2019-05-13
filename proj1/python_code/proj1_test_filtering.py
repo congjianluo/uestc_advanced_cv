@@ -21,7 +21,8 @@ luo_imshow("Figure 1", test_image)
 ## Identify filter
 # This filter should do nothing regardless of the padding method you use.
 def identity():
-    identity_filter = np.array(([0, 0, 0], [0, 1, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]), dtype="float32")
+    identity_filter = np.array(([0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 1, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]),
+                               dtype="float32")
     identity_image = my_imfilter(test_image, identity_filter)
     luo_imshow("Figure 2", identity_image)
     luo_imwrite(identity_image, 'identity_image.jpg')
