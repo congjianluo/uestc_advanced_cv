@@ -95,7 +95,7 @@ if __name__ == "__main__":
     # blur()
     # large_1d_blur()
     # sobel()
-    laplacian()
+    # laplacian()
     # high_pass()
     pass
 

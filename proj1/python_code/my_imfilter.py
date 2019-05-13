@@ -36,8 +36,8 @@ def my_imfilter(image, filter):
     ################
     # Your code here
     ################
-    filter_height = filter.shape[0]
-    filter_width = filter.shape[1]
+    filter_height = int(filter.shape[0] / 2)
+    filter_width = int(filter.shape[1] / 2)
 
     image_height = image.shape[0]
     image_width = image.shape[1]
@@ -46,30 +46,14 @@ def my_imfilter(image, filter):
     print("Filtering...")
     for channel in range(0, 3):
         channel_data = image[:, :, channel]
-        for row in range(1, image_width - 2):
-            for column in range(1, image_height - 2):
-                output[:, :, channel] = np.mean(
-                    np.multiply(filter, [
-                        [
-                            channel_data[column - 1, row - 1],
-                            channel_data[column, row - 1],
-                            channel_data[column + 1, row - 1]
-                        ],
-                        [
-                            channel_data[column - 1, row],
-                            channel_data[column, row],
-                            channel_data[column + 1, row]
-                        ],
-                        [
-                            channel_data[column - 1, row + 1],
-                            channel_data[column, row + 1],
-                            channel_data[column + 1, row + 1]
-                        ]
-                    ])
-                )
-                # print("")
+        for row in range(filter_width, image_width - filter_width - 1):
+            for column in range(filter_height, image_height - filter_width - 1):
+                ret = np.multiply(filter, channel_data[column - filter_width:column + filter_width + 1,
+                                          row - filter_height:row + filter_height + 1])
+                output[column, row, channel] = min(max(np.sum(ret) / filter.shape[0] * filter.shape[1], 0), 255)
+                # pass
     # 这部分是库函数返回的结果
     print("End...")
     # temp = cv2.filter2D(image, -1, filter)
     # image = temp
-    return image
+    return output
