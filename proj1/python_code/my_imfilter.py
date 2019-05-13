@@ -36,24 +36,37 @@ def my_imfilter(image, filter):
     ################
     # Your code here
     ################
-    filter_height = int(filter.shape[0] / 2)
-    filter_width = int(filter.shape[1] / 2)
+    filter_width = int(filter.shape[0] / 2)
+    filter_height = int(filter.shape[1] / 2)
 
-    image_height = image.shape[0]
-    image_width = image.shape[1]
+    image_width = image.shape[0]
+    image_height = image.shape[1]
+
+    width_padding = np.zeros([image_width, filter_height], dtype=np.uint8) * 255
+    height_padding = np.ones([filter_height, image_height + filter_height * 2], dtype=np.uint8) * 255
 
     output = np.zeros_like(image)
     print("Filtering...")
     for channel in range(0, 3):
+        # 对每个通道进行计算
         channel_data = image[:, :, channel]
-        for row in range(filter_width, image_width - filter_width - 1):
-            for column in range(filter_height, image_height - filter_width - 1):
+        # 上下的padding
+        channel_data = np.concatenate([width_padding, channel_data], axis=1)
+        channel_data = np.concatenate([channel_data, width_padding], axis=1)
+        # 左右的padding
+        channel_data = np.concatenate([height_padding, channel_data], axis=0)
+        channel_data = np.concatenate([channel_data, height_padding], axis=0)
+
+        # 让filter划过整个通道的长宽
+        for column in range(filter_width, channel_data.shape[0] - filter_width):
+            for row in range(filter_height, channel_data.shape[1] - filter_height):
                 ret = np.multiply(filter, channel_data[column - filter_width:column + filter_width + 1,
                                           row - filter_height:row + filter_height + 1])
-                output[column, row, channel] = min(max(np.sum(ret) / filter.shape[0] * filter.shape[1], 0), 255)
-                # pass
+                # 保存对应位
+                output[column - filter_width, row - filter_height, channel] = min(max(np.sum(ret), 0), 255)
+
     # 这部分是库函数返回的结果
     print("End...")
     # temp = cv2.filter2D(image, -1, filter)
-    # image = temp
+    # output = temp
     return output

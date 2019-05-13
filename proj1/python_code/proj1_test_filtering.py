@@ -15,14 +15,13 @@ cv2.destroyAllWindows()
 ## Setup
 test_image = cv2.imread("../data/cat.bmp")
 test_image = cv2.resize(test_image, (0, 0), fx=0.7, fy=0.7)
+luo_imshow("Figure 1", test_image)
 
-
-# luo_imwrite(test_image, "Figure 1")
 
 ## Identify filter
 # This filter should do nothing regardless of the padding method you use.
 def identity():
-    identity_filter = np.array(([0, 0, 0], [0, 1, 0], [0, 0, 0]), dtype="float32")
+    identity_filter = np.array(([0, 0, 0], [0, 1, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]), dtype="float32")
     identity_image = my_imfilter(test_image, identity_filter)
     luo_imshow("Figure 2", identity_image)
     luo_imwrite(identity_image, 'identity_image.jpg')
@@ -91,7 +90,7 @@ def high_pass():
 
 # 选择需要运行的test
 if __name__ == "__main__":
-    # identity()
+    identity()
     # blur()
     # large_1d_blur()
     # sobel()
