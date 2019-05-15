@@ -22,16 +22,17 @@ def get_image_paths(data_path, categories, num_train_per_cat):
     test_labels = [None] * num_categories * num_train_per_cat
 
     for i in range(0, num_categories):
-        images = os.listdir(os.path.join(data_path, "train", categories[i]))
+        trian_images = os.listdir(os.path.join(data_path, "train", categories[i]))
+        test_images = os.listdir(os.path.join(data_path, "test", categories[i].lower()))
 
         for j in range(0, num_train_per_cat):
             train_image_paths[i * num_train_per_cat + j] = \
-                os.path.join(data_path, 'train', categories[i], images[j])
+                os.path.join(data_path, 'train', categories[i], trian_images[j])
             train_labels[i * num_train_per_cat + j] = categories[i]
 
         for j in range(0, num_train_per_cat):
             test_image_paths[i * num_train_per_cat + j] = \
-                os.path.join(data_path, 'test', categories[i], images[j])
+                os.path.join(data_path, 'test', categories[i].lower(), test_images[j])
             test_labels[i * num_train_per_cat + j] = categories[i]
 
     return train_image_paths, test_image_paths, train_labels, test_labels

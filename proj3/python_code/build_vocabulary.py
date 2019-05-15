@@ -1,10 +1,24 @@
-# l Starter code prepared by James Hays for CS 143, Brown University
-
 # This function will sample SIFT descriptors from the training images,
 # cluster them with kmeans, and then return the cluster centers.
 
+import cv2
+import numpy as np
+from sklearn.cluster import KMeans
+
+
 def build_vocabulary(image_paths, vocab_size):
-    pass
+    cluster_SIFT_features = []
+    sift = cv2.xfeatures2d.SIFT_create()
+    for image_path in image_paths:
+        image = cv2.imread(image_path)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        locations, SIFT_features = sift.detectAndCompute(gray, None)
+        temp = SIFT_features.tolist()
+        cluster_SIFT_features += temp
+    # cluster_SIFT_features = np.array(cluster_SIFT_features)
+    kmeans = KMeans(n_clusters=vocab_size, random_state=0).fit(cluster_SIFT_features)
+    cluster_centers = kmeans.cluster_centers_
+    return cluster_centers
 
 
 # The inputs are images, a N x 1 cell array of image paths and the size of

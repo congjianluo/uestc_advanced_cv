@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn import svm
 
 # Starter code prepared by James Hays for CS 143, Brown University
 
@@ -49,6 +50,13 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
     # unique() is used to get the category list from the observed training
     # category list. 'categories' will not be in the same order as in proj3.m,
     # because unique() sorts them. This shouldn't really matter, though.
-    categories = np.unique(train_labels)
-    num_categories = len(categories)
-    return categories, num_categories
+    # categories = np.unique(train_labels)
+    # num_categories = len(categories)
+
+    clf = svm.SVC(gamma='scale')
+    clf.fit(train_image_feats, train_labels)
+    predicted_categories = []
+
+    for test_image_feat in test_image_feats:
+        predicted_categories.append(clf.predict(test_image_feat))
+    return predicted_categories

@@ -44,7 +44,7 @@ abbr_categories = {'Kit', 'Sto', 'Bed', 'Liv', 'Off', 'Ind', 'Sub', ...
 %number of training examples per category to use. Max is 100. For
 %simplicity, we assume this is the number of test cases per category, as
 %well.
-num_train_per_cat = 100; 
+num_train_per_cat = 100;
 
 %This function returns cell arrays containing the file path for each train
 %and test image, as well as cell arrays with the label of each train and

@@ -36,7 +36,11 @@ Useful functions:
   [Y,I] = SORT(X) if you're going to be reasoning about many nearest
   neighbors
 """
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
-    pass
+    classifier = KNeighborsClassifier(n_neighbors=5)
+    classifier.fit(train_image_feats, train_labels)
+    predicted_categories=classifier.predict(test_image_feats).tolist()
+    return predicted_categories

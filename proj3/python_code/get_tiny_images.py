@@ -23,7 +23,8 @@ def get_tiny_images(image_paths):
         image = cv2.resize(image, (16, 16))
         image_feat = normalized(np.resize(image, [16 * 16]))
 
-        image_feats.append(image_feat)
+        image_feats.append(image_feat.tolist()[0])
+    return image_feats
 # image_paths is an N x 1 cell array of strings where each string is an
 #  image path on the file system.
 # image_feats is an N x d matrix of resized and then vectorized tiny

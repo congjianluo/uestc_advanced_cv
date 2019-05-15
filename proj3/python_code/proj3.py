@@ -28,9 +28,9 @@ FEATURE = 'tiny image'
 # FEATURE = 'bag of sift'
 # FEATURE = 'placeholder'
 
-# CLASSIFIER = 'nearest neighbor'
+CLASSIFIER = 'nearest neighbor'
 # CLASSIFIER = 'support vector machine'
-CLASSIFIER = 'placeholder'
+# CLASSIFIER = 'placeholder'
 
 # set up paths to VLFeat functions.
 # See http://www.vlfeat.org/matlab/matlab.html for VLFeat Matlab documentation
@@ -53,7 +53,7 @@ abbr_categories = ['Kit', 'Sto', 'Bed', 'Liv', 'Off', 'Ind', 'Sub',
 # simplicity, we assume this is the number of test cases per category, as
 # well.
 
-num_train_per_cat = 100
+num_train_per_cat = 100  # 100
 
 # This function returns cell arrays containing the file path for each train
 # and test image, as well as cell arrays with the label of each train and
