@@ -9,23 +9,15 @@
 import numpy as np
 import cv2
 
-
-def normalized(a, axis=-1, order=2):
-    l2 = np.atleast_1d(np.linalg.norm(a, order, axis))
-    l2[l2 == 0] = 1
-    return a / np.expand_dims(l2, axis)
-
-
 def get_tiny_images(image_paths):
     image_feats = []
     for image_path in image_paths:
         image = cv2.imread(image_path)
-        image = cv2.resize(image, (20, 20))
-        image_feat = np.resize(image, [20 * 20])
+        image = cv2.resize(image, (15, 15))
+        image_feat = np.resize(image, [15 * 15])
         image_feat = image_feat.tolist()
         mean = np.mean(image_feat)
         image_feat = [(value - mean) for value in image_feat]
-        # print(np.sum(image_feat))
         image_feats.append(image_feat)
     return image_feats
 # image_paths is an N x 1 cell array of strings where each string is an

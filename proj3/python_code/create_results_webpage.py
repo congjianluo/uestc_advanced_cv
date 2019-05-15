@@ -32,11 +32,11 @@ def create_results_webpage(train_image_paths, test_image_paths,
     confusion_matrix = np.zeros([num_categories, num_categories])
 
     for i in range(len(predicted_categories)):
-        row = categories.index(test_labels[i]) - 1
-        column = categories.index(predicted_categories[i]) - 1
+        row = categories.index(test_labels[i])
+        column = categories.index(predicted_categories[i])
         confusion_matrix[row, column] = confusion_matrix[row, column] + 1
 
     num_test_per_cat = len(test_labels) / num_categories
     confusion_matrix = np.divide(confusion_matrix, num_test_per_cat)
-    accuracy = np.mean(confusion_matrix)
+    accuracy = np.mean(np.diag(confusion_matrix))
     print('Accuracy (mean of diagonal of confusion matrix) is %.3f\n' % accuracy)

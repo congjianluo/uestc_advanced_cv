@@ -40,7 +40,8 @@ from sklearn.neighbors import KNeighborsClassifier
 
 
 def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
-    classifier = KNeighborsClassifier(n_neighbors=5)
+    classifier = KNeighborsClassifier(n_neighbors=1, metric="manhattan")
+    # classifier = KNeighborsClassifier(n_neighbors=1, metric="euclidean")
     classifier.fit(train_image_feats, train_labels)
-    predicted_categories=classifier.predict(test_image_feats).tolist()
+    predicted_categories = classifier.predict(test_image_feats)
     return predicted_categories
