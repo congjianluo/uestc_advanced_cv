@@ -20,10 +20,13 @@ def get_tiny_images(image_paths):
     image_feats = []
     for image_path in image_paths:
         image = cv2.imread(image_path)
-        image = cv2.resize(image, (16, 16))
-        image_feat = normalized(np.resize(image, [16 * 16]))
-
-        image_feats.append(image_feat.tolist()[0])
+        image = cv2.resize(image, (20, 20))
+        image_feat = np.resize(image, [20 * 20])
+        image_feat = image_feat.tolist()
+        mean = np.mean(image_feat)
+        image_feat = [(value - mean) for value in image_feat]
+        # print(np.sum(image_feat))
+        image_feats.append(image_feat)
     return image_feats
 # image_paths is an N x 1 cell array of strings where each string is an
 #  image path on the file system.
