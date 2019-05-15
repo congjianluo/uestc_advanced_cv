@@ -41,7 +41,7 @@ data_path = '../data/'  # change if you want to work with a network copy
 # This is the list of categories / directories to use. The categories are
 # somewhat sorted by similarity so that the confusion matrix looks more
 # structured (indoor and then urban and then rural).
-categories = ['Kitchen', 'Store', 'Bedroom', 'LivingRoom', 'Office',
+categories = ['Kitchen', 'Store', 'Bedroom', 'Livingroom', 'Office',
               'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street',
               'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
 
