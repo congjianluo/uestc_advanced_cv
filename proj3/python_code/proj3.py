@@ -8,6 +8,8 @@ from get_image_paths import get_image_paths
 from get_tiny_images import get_tiny_images
 from nearest_neighbor_classify import nearest_neighbor_classify
 from svm_classify import svm_classify
+import random
+import copy
 
 # All of your code will be in "Step 1" and "Step 2", although you can
 # modify other parameters in the starter code.
@@ -24,13 +26,13 @@ from svm_classify import svm_classify
 # code does not crash when run unmodified and you can get a preview of how
 # results are presented.
 
-FEATURE = 'tiny image'
+# FEATURE = 'tiny image'
 # FEATURE = 'bag of sift'
-# FEATURE = 'placeholder'
+FEATURE = 'placeholder'
 
 # CLASSIFIER = 'nearest neighbor'
-CLASSIFIER = 'support vector machine'
-# CLASSIFIER = 'placeholder'
+# CLASSIFIER = 'support vector machine'
+CLASSIFIER = 'placeholder'
 
 # set up paths to VLFeat functions.
 # See http://www.vlfeat.org/matlab/matlab.html for VLFeat Matlab documentation
@@ -82,11 +84,11 @@ if FEATURE.lower() == "tiny image":
     train_image_feats = get_tiny_images(train_image_paths)
     test_image_feats = get_tiny_images(test_image_paths)
 elif FEATURE.lower() == "bag of sift":
-    if not os.path.exists("vocab.mat"):
+    if not os.path.exists("vocab.npy"):
         print('No existing visual word vocabulary found. Computing one from training images\n')
         vocab_size = 400
         vocab = build_vocabulary(train_image_paths, vocab_size)
-        np.save("vocab.mat", vocab)
+        np.save("vocab.npy", vocab)
     train_image_feats = get_bags_of_sifts(train_image_paths)
     test_image_feats = get_bags_of_sifts(test_image_paths)
 elif FEATURE.lower() == "placeholder":
@@ -115,8 +117,9 @@ if CLASSIFIER.lower() == "nearest neighbor":
 elif CLASSIFIER.lower() == "support vector machine":
     predicted_categories = svm_classify(train_image_feats, train_labels, test_image_feats)
 elif CLASSIFIER.lower() == "placeholder":
-    random_permutation = np.random.permutation(len(test_labels))
-    predicted_categories = test_labels(random_permutation)
+    # random_permutation = np.random.permutation(len(test_labels))
+    predicted_categories = copy.deepcopy(test_labels)
+    random.shuffle(predicted_categories)
 else:
     raise Exception("Unknown classifier type")
 

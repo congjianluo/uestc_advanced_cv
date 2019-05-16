@@ -61,17 +61,19 @@ and using KD-trees.
 
 
 def get_bags_of_sifts(image_paths):
-    vocab_mat = np.load('vocab.mat')
-    vocab_size = image_paths.shape[1]
+    vocab_mat = np.load('vocab.npy')
+    vocab_size = len(image_paths)
     tree = KDTree(vocab_mat)
-    images_bags = []
     cluster_SIFT_features = []
     sift = cv2.xfeatures2d.SIFT_create()
     for image_path in image_paths:
-        image_bag = np.zeroes([1, vocab_size])
+        image_bag = [0] * vocab_size
         image = cv2.imread(image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         locations, SIFT_features = sift.detectAndCompute(gray, None)
         temp = SIFT_features.tolist()
-        nearest_dist, nearest_ind = tree.query(temp, k=2)
-        pass
+        nearest_dist, nearest_ind = tree.query(temp, k=1)
+        for index in nearest_ind:
+            image_bag[int(index)] += 1
+        cluster_SIFT_features.append(image_bag)
+    return cluster_SIFT_features

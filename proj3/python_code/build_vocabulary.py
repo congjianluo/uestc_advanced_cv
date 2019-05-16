@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from sklearn.cluster import KMeans
 from tqdm import tqdm
+import random
 
 
 def build_vocabulary(image_paths, vocab_size):
@@ -18,7 +19,8 @@ def build_vocabulary(image_paths, vocab_size):
         cluster_SIFT_features += temp
     # cluster_SIFT_features = np.array(cluster_SIFT_features)
     # kmeans = KMeans(n_clusters=vocab_size, random_state=0).fit(cluster_SIFT_features)
-    kmeans = KMeans(n_clusters=vocab_size,max_iter=100).fit(cluster_SIFT_features)
+    cluster_SIFT_features = random.sample(cluster_SIFT_features, 400)
+    kmeans = KMeans(n_clusters=vocab_size, max_iter=100).fit(cluster_SIFT_features)
     cluster_centers = kmeans.cluster_centers_
     return cluster_centers
 
