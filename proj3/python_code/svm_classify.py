@@ -53,10 +53,7 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
     # categories = np.unique(train_labels)
     # num_categories = len(categories)
 
-    clf = svm.SVC(gamma='scale')
+    clf = svm.SVC(C=100, gamma='scale', decision_function_shape="ovr")
     clf.fit(train_image_feats, train_labels)
-    predicted_categories = []
-
-    for test_image_feat in test_image_feats:
-        predicted_categories.append(clf.predict(test_image_feat))
+    predicted_categories = clf.predict(test_image_feats)
     return predicted_categories

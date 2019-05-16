@@ -28,8 +28,8 @@ FEATURE = 'tiny image'
 # FEATURE = 'bag of sift'
 # FEATURE = 'placeholder'
 
-CLASSIFIER = 'nearest neighbor'
-# CLASSIFIER = 'support vector machine'
+# CLASSIFIER = 'nearest neighbor'
+CLASSIFIER = 'support vector machine'
 # CLASSIFIER = 'placeholder'
 
 # set up paths to VLFeat functions.
