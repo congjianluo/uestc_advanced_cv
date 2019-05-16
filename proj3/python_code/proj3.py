@@ -27,12 +27,12 @@ import copy
 # results are presented.
 
 # FEATURE = 'tiny image'
-# FEATURE = 'bag of sift'
-FEATURE = 'placeholder'
+FEATURE = 'bag of sift'
+# FEATURE = 'placeholder'
 
 # CLASSIFIER = 'nearest neighbor'
-# CLASSIFIER = 'support vector machine'
-CLASSIFIER = 'placeholder'
+CLASSIFIER = 'support vector machine'
+# CLASSIFIER = 'placeholder'
 
 # set up paths to VLFeat functions.
 # See http://www.vlfeat.org/matlab/matlab.html for VLFeat Matlab documentation

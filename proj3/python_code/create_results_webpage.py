@@ -219,47 +219,49 @@ def create_results_webpage(train_image_paths, test_image_paths,
                     f.write('</td>\n')
 
             for j in range(num_samples):
-                if j < len(true_positives):
-                    tmp = cv2.imread(true_positives[j])
-                    height = tmp.shape[0]
-                    rescale_factor = thumbnail_height / height
-                    tmp = cv2.resize(tmp, None, fx=rescale_factor, fy=rescale_factor)
-                    height, width = tmp.shape[:2]
-
-                    dir, name = os.path.split(true_positives[j])
-
-                    cv2.imwrite(os.path.join('results_webpage/thumbnails/', categories[i] + '_' + name),
-                                tmp, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-
-                    f.write('<td bgcolor=LightGreen>')
-                    f.write('<img src="{}" width=%d height=%d>'.format(
-                        os.path.join('thumbnails/', categories[i] + '_' + name), width,
-                        height))
-                    f.write('</td>\n')
-                else:
-                    f.write('<td bgcolor=LightGreen>')
-                    f.write('</td>\n')
-
-            for j in range(num_samples):
                 if j < len(false_positives):
                     tmp = cv2.imread(false_positives[j])
-                    height, width = tmp.shape[:2]
+                    height = tmp.shape[0]
                     rescale_factor = thumbnail_height / height
                     tmp = cv2.resize(tmp, None, fx=rescale_factor, fy=rescale_factor)
                     height, width = tmp.shape[:2]
 
                     dir, name = os.path.split(false_positives[j])
 
-                    cv2.imwrite(os.path.join('results_webpage/thumbnails/', categories[i] + '_' + name),
+                    cv2.imwrite(os.path.join('results_webpage/thumbnails/', false_positive_labels[j] + '_' + name),
                                 tmp, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
 
                     f.write('<td bgcolor=LightCoral>')
                     f.write('<img src="{}" width=%d height=%d>'.format(
-                        os.path.join('thumbnails/', categories[i] + '_' + name), width,
+                        os.path.join('thumbnails/', false_positive_labels[j] + '_' + name), width,
                         height))
+                    f.write('<br><small>%s</small>' % false_positive_labels[j])
                     f.write('</td>\n')
                 else:
                     f.write('<td bgcolor=LightCoral>')
+                    f.write('</td>\n')
+
+            for j in range(num_samples):
+                if j < len(false_negatives):
+                    tmp = cv2.imread(false_negatives[j])
+                    height, width = tmp.shape[:2]
+                    rescale_factor = thumbnail_height / height
+                    tmp = cv2.resize(tmp, None, fx=rescale_factor, fy=rescale_factor)
+                    height, width = tmp.shape[:2]
+
+                    dir, name = os.path.split(false_negatives[j])
+
+                    cv2.imwrite(os.path.join('results_webpage/thumbnails/', categories[i] + '_' + name),
+                                tmp, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
+                    f.write('<td bgcolor=#FFBB55>')
+                    f.write('<img src="{}" width=%d height=%d>'.format(
+                        os.path.join('thumbnails/', categories[i] + '_' + name), width,
+                        height))
+                    f.write('<br><small>%s</small>'% false_negative_labels[j])
+                    f.write('</td>\n')
+                else:
+                    f.write('<td bgcolor=#FFBB55>')
                     f.write('</td>\n')
 
         f.write("</tr>\n")
