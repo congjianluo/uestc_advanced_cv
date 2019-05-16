@@ -132,31 +132,31 @@ def create_results_webpage(train_image_paths, test_image_paths,
 
             train_examples_index = my_strcmp(categories[i], train_labels)
             train_examples = [train_image_paths[index] for index in
-                              range(len(train_examples_index)) if train_examples_index[index] == 1]
+                              range(len(train_examples_index)) if train_examples_index[index]]
 
             true_positives_index = np.logical_and(
                 my_strcmp(categories[i], test_labels)
                 , my_strcmp(categories[i], predicted_categories)
             )
             true_positives = [test_image_paths[index] for index in
-                              range(len(true_positives_index)) if index == 1]
+                              range(len(true_positives_index)) if true_positives_index[index]]
 
             false_positive_inds = np.logical_and(
                 np.logical_not(my_strcmp(categories[i], test_labels))
                 , my_strcmp(categories[i], predicted_categories))
             false_positives = [test_image_paths[index] for index in
-                               range(len(false_positive_inds)) if index == 1]
+                               range(len(false_positive_inds)) if false_positive_inds[index]]
             false_positive_labels = [test_labels[index] for index in
-                                     range(len(false_positive_inds)) if index == 1]
+                                     range(len(false_positive_inds)) if false_positive_inds[index]]
 
             false_negative_inds = np.logical_and(
                 my_strcmp(categories[i], test_labels),
                 np.logical_not(my_strcmp(categories[i], predicted_categories))
             )
             false_negatives = [test_image_paths[index] for index in
-                               range(len(false_negative_inds)) if index == 1]
+                               range(len(false_negative_inds)) if false_negative_inds[index]]
             false_negative_labels = [predicted_categories[index] for index in
-                                     range(len(false_positive_inds)) if index == 1]
+                                     range(len(false_negative_inds)) if false_negative_inds[index]]
 
             random.shuffle(train_examples)
             random.shuffle(true_positives)
@@ -258,7 +258,7 @@ def create_results_webpage(train_image_paths, test_image_paths,
                     f.write('<img src="{}" width=%d height=%d>'.format(
                         os.path.join('thumbnails/', categories[i] + '_' + name), width,
                         height))
-                    f.write('<br><small>%s</small>'% false_negative_labels[j])
+                    f.write('<br><small>%s</small>' % false_negative_labels[j])
                     f.write('</td>\n')
                 else:
                     f.write('<td bgcolor=#FFBB55>')

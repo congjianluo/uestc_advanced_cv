@@ -26,8 +26,8 @@ import copy
 # code does not crash when run unmodified and you can get a preview of how
 # results are presented.
 
-# FEATURE = 'tiny image'
-FEATURE = 'bag of sift'
+FEATURE = 'tiny image'
+# FEATURE = 'bag of sift'
 # FEATURE = 'placeholder'
 
 # CLASSIFIER = 'nearest neighbor'

@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from sklearn.neighbors import KDTree
+from tqdm import tqdm
 
 # Starter code prepared by James Hays for CS 143, Brown University
 
@@ -66,7 +67,7 @@ def get_bags_of_sifts(image_paths):
     tree = KDTree(vocab_mat)
     cluster_SIFT_features = []
     sift = cv2.xfeatures2d.SIFT_create()
-    for image_path in image_paths:
+    for image_path in tqdm(image_paths, desc='SIFT'):
         image_bag = [0] * vocab_size
         image = cv2.imread(image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
