@@ -9,6 +9,7 @@
 import numpy as np
 import cv2
 
+
 def get_tiny_images(image_paths):
     image_feats = []
     for image_path in image_paths:

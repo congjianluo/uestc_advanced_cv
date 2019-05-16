@@ -4,19 +4,21 @@
 import cv2
 import numpy as np
 from sklearn.cluster import KMeans
+from tqdm import tqdm
 
 
 def build_vocabulary(image_paths, vocab_size):
     cluster_SIFT_features = []
     sift = cv2.xfeatures2d.SIFT_create()
-    for image_path in image_paths:
+    for image_path in tqdm(image_paths, desc="Imaging-SIFT"):
         image = cv2.imread(image_path)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         locations, SIFT_features = sift.detectAndCompute(gray, None)
         temp = SIFT_features.tolist()
         cluster_SIFT_features += temp
     # cluster_SIFT_features = np.array(cluster_SIFT_features)
-    kmeans = KMeans(n_clusters=vocab_size, random_state=0).fit(cluster_SIFT_features)
+    # kmeans = KMeans(n_clusters=vocab_size, random_state=0).fit(cluster_SIFT_features)
+    kmeans = KMeans(n_clusters=vocab_size,max_iter=100).fit(cluster_SIFT_features)
     cluster_centers = kmeans.cluster_centers_
     return cluster_centers
 
