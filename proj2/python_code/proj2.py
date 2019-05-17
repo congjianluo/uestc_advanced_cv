@@ -46,29 +46,14 @@ feature_width = 16  # width and height of each local feature, in pixels.
 
 ## Find distinctive points in each image. Szeliski 4.1.1
 # !!! You will need to implement get_interest_points. !!!
-# x1, y1 = get_interest_points(image1, feature_width)
-# x2, y2 = get_interest_points(image2, feature_width)
-# np.save("x1", x1)
-# np.save("x2", x2)
-# np.save("y1", y1)
-# np.save("y2", y2)
-x1 = np.load("x1.npy")
-x2 = np.load("x2.npy")
-y1 = np.load("y1.npy")
-y2 = np.load("y2.npy")
+x1, y1 = get_interest_points(image1, feature_width)
+x2, y2 = get_interest_points(image2, feature_width)
 show_image_point(image1, x1, y1)
 show_image_point(image2, x2, y2)
 image1_features = get_features(image1, x1, y1, feature_width)
-np.save("image1", image1_features)
 image2_features = get_features(image2, x2, y2, feature_width)
-np.save("image2", image2_features)
-
-image1_features = np.load("image1.npy")
-image2_features = np.load("image2.npy")
 
 matches, confidences = match_features(image1_features, image2_features)
-
-# matches = matches[:20]
 
 num_pts_to_visualize = len(matches)
 

@@ -39,6 +39,6 @@ def get_features(image, x, y, feature_width):
 
     features = np.resize(features, [features.shape[0], 128])
     for i in range(features.shape[0]):
-        t = max(np.sqrt(np.dot(features[i], features[i])), 1)
+        t = max(np.amax(np.sqrt(np.multiply(features[i], features[i]))),1)
         features[i] = features[i] / t
     return features

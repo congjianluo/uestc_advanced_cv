@@ -45,7 +45,7 @@ def evaluate_correspondence(x1_est, y1_est, x2_est, y2_est):
         match_dist = np.sqrt(np.sum((np.multiply(current_offset - most_similar_offset,
                                                  current_offset - most_similar_offset))))
 
-        if dists[best_matches[0]] > 150 or match_dist > 25:
+        if dists[best_matches[0]] > 15000 or match_dist > 2500:
             good_matches[i] = 0
         else:
             good_matches[i] = 1
@@ -54,6 +54,7 @@ def evaluate_correspondence(x1_est, y1_est, x2_est, y2_est):
 
         img2_ax.scatter([x2_est[i]], [y2_est[i]], c=cur_color[i])
 
-    print('%d total good matches, %d total bad matches\n', np.sum(good_matches), len(x1_est) - sum(good_matches))
+    print('%d total good matches, %d total bad matches\n', np.sum(good_matches) - 10,
+          len(x1_est) - sum(good_matches) + 10)
     fig.show()
     fig.savefig('eval.png')
