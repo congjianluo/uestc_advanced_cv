@@ -14,8 +14,8 @@ from my_imfilter import my_imfilter
 from utils import luo_imshow, luo_imwrite, luo_fspecial
 from vis_hybrid_image import vis_hybrid_image
 
-image1 = cv2.imread('../data/dog.bmp')
-image2 = cv2.imread('../data/cat.bmp')
+image1 = cv2.imread('../data/einstein.bmp')
+image2 = cv2.imread('../data/marilyn.bmp')
 
 # Several additional test cases are provided for you, but feel free to make
 # your own (you'll need to align the images in a photo editor such as
@@ -67,3 +67,7 @@ luo_imwrite(low_frequencies, "low_frequencies.jpg")
 luo_imwrite(high_frequencies, "high_frequencies.jpg")
 luo_imwrite(hybrid_image, "hybrid_image.jpg")
 luo_imwrite(vis, "vis.jpg")
+
+import time
+
+time.sleep(100)

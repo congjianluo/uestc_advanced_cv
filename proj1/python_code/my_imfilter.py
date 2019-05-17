@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-
 # This function is intended to behave like the built in function imfilter()
 # See 'help imfilter' or 'help conv2'. While terms like "filtering" and
 # "convolution" might be used interchangeably, and they are indeed nearly
@@ -31,6 +30,8 @@ import numpy as np
 # # filter2, conv2, etc. Simply loop over all the pixels and do the actual
 # # computation. It might be slow.
 # output = imfilter(image, filter);
+import time
+
 
 def my_imfilter(image, filter):
     ################
@@ -46,6 +47,7 @@ def my_imfilter(image, filter):
     height_padding = np.zeros([filter_width, image_height + filter_height * 2], dtype=np.uint8) * 255
 
     output = np.ones_like(image)
+    time_start = time.time()
     print("Filtering...")
     for channel in range(0, 3):
         # 对每个通道进行计算
@@ -66,7 +68,8 @@ def my_imfilter(image, filter):
                 output[column - filter_width, row - filter_height, channel] = min(max(int(np.sum(ret)), 0), 255)
 
     # 这部分是库函数返回的结果
-    print("End...")
+    time_end = time.time()
+    print("End, total:{}".format(time_end - time_start))
     # temp = cv2.filter2D(image, -1, filter)
     # output = temp
     return output
