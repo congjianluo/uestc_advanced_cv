@@ -23,17 +23,19 @@ def get_features(image, x, y, feature_width):
         py = y[i]
 
         x1 = max(px - half_width, 0)
-        x2 = min(px + half_width - 1, len(x))
+        x2 = min(px + half_width - 1, image.shape[0])
         y1 = max(py - half_width, 0)
-        y2 = min(py + half_width - 1, len(y))
+        y2 = min(py + half_width - 1, image.shape[1])
 
-        for row in range(int(y1), int(y2)):
-            for col in range(int(x1), int(x2)):
+        for row in range(int(x1), int(x2)):
+            for col in range(int(y1), int(y2)):
+                if col >= 768:
+                    print()
                 cell_row = np.mod(math.floor((row - x1) / (feature_width / 4)), 4)
                 cell_col = np.mod(math.floor((col - y1) / (feature_width / 4)), 4)
-                features[i, cell_row, cell_col, angle[row, col]] = \
-                    features[i, cell_row, cell_col, angle[row, col]] \
-                    + magnitude[row, col]
+                features[i, cell_col, cell_row, angle[col, row]] = \
+                    features[i, cell_col, cell_row, angle[col, row]] \
+                    + magnitude[col, row]
 
     features = np.resize(features, [features.shape[0], 128])
     for i in range(features.shape[0]):

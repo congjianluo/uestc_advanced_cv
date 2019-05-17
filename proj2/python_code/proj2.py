@@ -21,6 +21,7 @@ import numpy as np
 # additional images. A single scale pipeline works fine for these two
 # images (and will give you full credit for this project), but you will
 # need local features at multiple scales to handle harder cases.
+from evaluate_correspondence import evaluate_correspondence
 from show_correspondence import show_correspondence, show_image_point
 from get_features import get_features
 from get_interest_points import get_interest_points
@@ -67,6 +68,8 @@ image2_features = np.load("image2.npy")
 
 matches, confidences = match_features(image1_features, image2_features)
 
+# matches = matches[:20]
+
 num_pts_to_visualize = len(matches)
 
 x1 = [x1[match[0]] for match in matches]
@@ -74,7 +77,7 @@ y1 = [y1[match[0]] for match in matches]
 x2 = [x2[match[1]] for match in matches]
 y2 = [y2[match[1]] for match in matches]
 
-matches, confidences = show_correspondence(image1, image2, x1, y1,
-                                           x2, y2)
+show_correspondence(image1, image2, x1, y1, x2, y2)
 
-num_pts_to_evaluate = matches.shape[0]
+evaluate_correspondence(np.array(x1) / scale_factor, np.array(y1) / scale_factor,
+                        np.array(x2) / scale_factor, np.array(y2) / scale_factor)
