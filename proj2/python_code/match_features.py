@@ -1,25 +1,22 @@
 import numpy as np
 import random
+from sklearn.neighbors import NearestNeighbors
 
 
 def match_features(features1, features2):
-    num_features1 = features1.shape[0]
-    num_features2 = features2.shape[0]
+    matches = []
+    confidences = []
+    knn = NearestNeighbors(3)
+    knn.fit(features1)
 
-    matches = np.zeros(num_features1, 2)
-    random.shuffle(num_features1)
-    random.shuffle(num_features2)
+    dist, ind = knn.kneighbors(features2, 2)
 
-    matches[:, 0] = num_features1
-    matches[:, 1] = num_features2
+    for i in range(len(ind)):
+        index = ind[i]
+        distances = dist[i]
 
-    # Placeholder that you can delete. Random matches and confidences
-    confidences = np.random.rand(num_features1, 1)
-
-    # Sort the matches so that the most confident onces are at the top of the
-    # list. You should probably not delete this, so that the evaluation
-    # functions can be run on the top matches easily.
-
-    np.sort(confidences)
+        if distances[0] / distances[1] < 0.95:
+            matches.append([index[0], i])
+            confidences.append(1 - distances[0])
 
     return matches, confidences

@@ -54,6 +54,7 @@ def get_interest_points(image, feature_width):
                     and har[i, j] > har[i + 1, j - 1] and har[i, j] > har[i + 1, j + 1]:
                 result[i, j] = 1
 
+    result = np.transpose(result)
     x, y = np.where(result == 1)
     # confidence = [0] * har_max
     return x, y
